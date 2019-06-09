@@ -5,11 +5,28 @@ import psycopg2
 DBNAME = "news"
 
 
+def execute_query(query):
+    """
+    Executes the given query against the given database name
+    :param query: SQL query to execute
+    :return: Result of the database query
+    """
+    try:
+
+        db = psycopg2.connect(database=DBNAME)
+        c = db.cursor()
+        c.execute(query)
+        results = c.fetchall()
+        db.close()
+        return results
+    except Exception as e:
+        print("Failed to execute query:\n {}Error: {}\n".
+              format(query, e))
+
+
 def get_popular_articles():
     """What are the most popular three articles of all time?"""
 
-    db = psycopg2.connect(database=DBNAME)
-    c = db.cursor()
     GET_QUERY = """SELECT INITCAP(article) AS article, views
     FROM (SELECT REPLACE(SUBSTRING(log.path, 10),'-', ' ')
     AS article, count(log.path) AS views
@@ -18,17 +35,12 @@ def get_popular_articles():
     ORDER BY views DESC
     LIMIT 3) as clean_articles;
   """
-    c.execute(GET_QUERY)
-    results = c.fetchall()
-    db.close()
-    return results
+
+    return execute_query(GET_QUERY)
 
 
 def get_popular_authors():
     """Who are the most popular (top 5) article authors of all time?"""
-
-    db = psycopg2.connect(database=DBNAME)
-    c = db.cursor()
 
     GET_QUERY = """SELECT DISTINCT top_five.name, SUM(top_five.views)
     AS total_views
@@ -43,17 +55,12 @@ def get_popular_authors():
     GROUP BY top_five.name
     ORDER BY total_views DESC;
     """
-    c.execute(GET_QUERY)
-    results = c.fetchall()
-    db.close()
-    return results
+
+    return execute_query(GET_QUERY)
 
 
 def get_error_day():
     """On which days did more than 1% of requests lead to errors?"""
-
-    db = psycopg2.connect(database=DBNAME)
-    c = db.cursor()
 
     GET_QUERY = """SELECT TO_CHAR(error.day::DATE,'Mon dd, yyyy') AS date,
     TRUNC(error.prc::NUMERIC, 2)
@@ -70,10 +77,8 @@ def get_error_day():
     WHERE error.day = req.day AND 100*(error.num::float/req.num::float) > 1
     ORDER BY error.day) AS error;
     """
-    c.execute(GET_QUERY)
-    results = c.fetchall()
-    db.close()
-    return results
+
+    return execute_query(GET_QUERY)
 
 
 if __name__ == '__main__':
