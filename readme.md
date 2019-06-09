@@ -42,7 +42,7 @@ application: it's a point where different pieces of software (a web app and a
 reporting tool, for instance) can share data.
 
 ```SQL
-SELECT event_day AS perioc,
+SELECT event_day AS period,
     SUM(current_paid_students) AS "Paid Students",
     SUM(current_trial_students) AS "Free Students"
 FROM analytics_tables.paid_enrollemnt
