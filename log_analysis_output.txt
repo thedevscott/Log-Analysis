@@ -1,0 +1,13 @@
+The top 3 articles are:
+Candidate Is Jerk -- 338647 views
+Bears Love Berries -- 253801 views
+Bad Things Gone -- 170098 views
+
+The top authors are:
+Ursula La Multa -- 4742824 views
+Rudolf von Treppenwitz -- 2371412 views
+Anonymous Contributor -- 1185706 views
+Markoff Chaney -- 1185706 views
+
+The day(s) request errors greater than 1%:
+Jul 17, 2016 -- 2.26% errors
