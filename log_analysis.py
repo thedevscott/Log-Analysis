@@ -12,7 +12,6 @@ def execute_query(query):
     :return: Result of the database query
     """
     try:
-
         db = psycopg2.connect(database=DBNAME)
         c = db.cursor()
         c.execute(query)
