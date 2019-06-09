@@ -71,7 +71,7 @@ Here are some parts that may be particularly useful to refer to:
 * [psql (PostgreSQL) 9.5.17](https://www.postgresql.org/download/linux/ubuntu/) 
 
 ### Instructions
-* Populate the database after install PostgreSQL
+* Populate the database after installing PostgreSQL
 ```shell
 psql -d news -f newsdata.sql
 ```
